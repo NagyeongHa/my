@@ -1,26 +1,26 @@
 //1
-const imgBox = document.querySelector(".imgBox2");
-function loadImages(numImages = 10){
-    let i=0;
-     while(i < numImages){
-     fetch('https://dog.ceo/api/breeds/image/random')
-     .then(response=>response.json())
-     .then(data=>{
-     const img =  document.createElement('img');
-     img.src = `${data.message}`
-     imgBox.appendChild(img);
-     })
-     i++;
-     }   
-     }
+// const imgBox = document.querySelector(".imgBox2");
+// function loadImages(numImages = 10){
+//     let i=0;
+//      while(i < numImages){
+//      fetch('https://dog.ceo/api/breeds/image/random')
+//      .then(response=>response.json())
+//      .then(data=>{
+//      const img =  document.createElement('img');
+//      img.src = `${data.message}`
+//      imgBox.appendChild(img);
+//      })
+//      i++;
+//      }   
+//      }
  
- loadImages();
+//  loadImages();
 
- window.addEventListener('scroll',()=>{
-    if(window.scrollY + window.innerHeight >= document.documentElement.scrollHeight) {
-    loadImages();
-    }
-})
+//  window.addEventListener('scroll',()=>{
+//     if(window.scrollY + window.innerHeight >= document.documentElement.scrollHeight) {
+//     loadImages();
+//     }
+// })
 
 
 //2
@@ -49,27 +49,36 @@ function loadImages(numImages = 10){
 
 
 //3
-// //json파일 읽어오는 fetch
-// function loadItems() {
-//     return fetch("../../attire.json")
-//         .then((response) => response.json())
-//         .then((json) => json.items);
-// }
+//json파일 읽어오는 fetch
+function loadItems() {
+    return fetch("../../attire.json")
+        .then((response) => response.json())
+        .then((json) => json.items);
+}
 
-// //이미지 동적으로 받아오기
-// loadItems().then((items) => {
-//     console.log(items);
-//     displayItems(items);
-// });
 
-// function displayItems(items) {
-//     const container = document.querySelector(".container");
-//     container.innerHTML = data.map((item) => createHTMLString(item)).join("");
-// }
+loadItems().then((items) => {
+    // console.log(items);
+    displayItems(items);
+});
 
-// function createHTMLString(item) {
-//     return `
-//     <div class = "imgBox2">
-//         <img src="${item.image}" />
-//     </div>`
-// }
+// html파일의 class="imgBox2"에 이미지 넣기
+function displayItems(items) {
+    const imgBox2 = document.querySelector(".imgBox2");
+    imgBox2.innerHTML = items.map((item) => createHTMLString(item)).join("");
+}
+
+//json의 이미지파일 주소값 연결
+function createHTMLString(item) {
+    return `
+        <img src="${item.image}" />
+    `
+}
+
+
+//무한스크롤
+ window.addEventListener('scroll',()=>{
+    if(window.scrollY + window.innerHeight >= document.documentElement.scrollHeight) {
+        loadItems();
+    }
+})
